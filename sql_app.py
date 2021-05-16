@@ -1,4 +1,4 @@
-import os, hashlib, psycopg2
+import os, hashlib#, psycopg2
 from flask import Flask, request, render_template
 from time import gmtime, strftime
 
