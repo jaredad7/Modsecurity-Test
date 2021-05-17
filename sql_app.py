@@ -10,7 +10,13 @@ port = int(os.getenv("PORT", 80))
 # Homepage
 @app.route("/")
 def index():
-    return render_template('home.html')
+    conn = psycopg2.connect(dbname = "test", user = "postgres", host = "localhost", password = "password")
+    cur = conn.cursor()
+    cur.execute("SELECT * FROM inputs;")
+    data = cur.fetchall()
+    cur.close()
+    conn.close()
+    return render_template('home.html', hist = data)
 
 
 #Save a string to the database
@@ -28,7 +34,6 @@ def save():
         data = cur.fetchall()
         cur.close()
         conn.close()
-        print(data)
         return render_template('home.html', hist = data)
     else:
         return "<p>Error<p>"
